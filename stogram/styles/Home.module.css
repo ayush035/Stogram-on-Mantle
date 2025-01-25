@@ -1,0 +1,32 @@
+.container {
+    background-color: #000000;
+    min-height: 100vh;
+  }
+  
+  .main {
+    color: rgb(0, 0, 0);
+    padding: 0 4em;
+  }
+  
+  .grantsContainer {
+    display: flex;
+    gap: 4em;
+    flex-wrap: wrap;
+  }
+  
+  .grantInfo {
+    padding: 2em;
+    color: rgb(10, 10, 10);
+    background-color: rgb(0, 0, 0);
+    border-radius: 2em;
+    max-width: 65ch;
+  }
+  .footer {
+    padding: 20px 0;
+    background-color: #000000; /* Adjust color as needed */
+}
+ .container {
+  display: flex;
+  justify-content: center;
+  
+}

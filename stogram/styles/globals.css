@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;}}
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body {
+  padding-left: 80px; /* Increase the left padding */
+  padding-right: 80px; /* Increase the right padding */
+  flex: 1;
+  background:rgb(var(--background-start-rgb));
+}
+hr {
+  height: 2px;
+  background-color: rgb(181, 174, 174);
+  border: none;
+  margin: 20px 0;
+  opacity: 0.6;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Translucent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.notification {
+  padding: 20px;
+  background: rgb(212, 127, 227);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 1000;
+  
+}
+.dismiss-button {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  color: #333;
+  border: none;
+  background: none;
+}
