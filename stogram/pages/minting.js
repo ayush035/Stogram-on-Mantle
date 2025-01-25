@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ethers } from 'ethers';
 import Navbar from '@/components/Navbar';
 
-const contractAddress = "0xb4f9cF8a5db1E6Bb501A1d22Be93A92fa3692BC4";
+const contractAddress = "0xFe1Cf96ad5d69b8E6932D01bC8083BBfDb504279";
 
 // Provided Contract ABI
 const contractABI = [
