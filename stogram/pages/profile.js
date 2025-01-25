@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import { useAccount } from 'wagmi'; // RainbowKit integration for wallet connection
 import logo from '@/public/logo.jpg';
 
-const contractAddress = "0x18B6926A500DC11b4E1b0f8DE27F770c5D9D2089"; // Your deployed contract address
+const contractAddress = "0xFe1Cf96ad5d69b8E6932D01bC8083BBfDb504279"; // Your deployed contract address
 const contractABI = [
   {
     "inputs": [
