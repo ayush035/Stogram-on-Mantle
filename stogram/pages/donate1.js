@@ -7,8 +7,8 @@ import { useAccount } from 'wagmi'; // RainbowKit integration for wallet connect
 import logo from '@/public/logo.jpg';
 
 // Contract Details
-const contractAddress = "0x18B6926A500DC11b4E1b0f8DE27F770c5D9D2089"; // Replace with your deployed contract address
-const mantleTokenAddress = "0x2b4D277d944f0eb31F25348156f54b22cAE14023"; // Replace with Mantle token contract address
+const contractAddress = "0x94dAe516f99882220Beb26b0CF872015B66ca9C9"; // Replace with your deployed contract address
+const mantleTokenAddress = "0xDC1f593f30F533b460F092cc2AcfbCA0715A4040"; // Replace with Mantle token contract address
 const contractABI = [
   [
     {
@@ -132,7 +132,7 @@ const Fund = () => {
       const formattedBalance = ethers.utils.formatUnits(balance, 18);
 
       if (Number(formattedBalance) < Number(amount)) {
-        setError(`Insufficient balance. You have ${formattedBalance} MANTLE.`);
+        setError(`Insufficient balance. You have ${formattedBalance} WMNT.`);
         return false;
       }
       return true;
