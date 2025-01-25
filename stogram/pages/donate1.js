@@ -7,93 +7,94 @@ import { useAccount } from 'wagmi'; // RainbowKit integration for wallet connect
 import logo from '@/public/logo.jpg';
 
 // Contract Details
-const contractAddress = "0xE20A4238BC7C2642446b3958B384aEDEc5B57063"; // Replace with your deployed contract address
-const metisTokenAddress = "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000"; // Replace with METIS token contract address
+const contractAddress = "0x18B6926A500DC11b4E1b0f8DE27F770c5D9D2089"; // Replace with your deployed contract address
+const mantleTokenAddress = "0x2b4D277d944f0eb31F25348156f54b22cAE14023"; // Replace with Mantle token contract address
 const contractABI = [
-    [
+  [
+    {
+      "inputs": [
         {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "_metisToken",
-                    "type": "address"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "internalType": "address",
-                    "name": "donor",
-                    "type": "address"
-                },
-                {
-                    "indexed": false,
-                    "internalType": "uint256",
-                    "name": "amount",
-                    "type": "uint256"
-                }
-            ],
-            "name": "DonationReceived",
-            "type": "event"
-        },
-        {
-            "inputs": [],
-            "name": "contractBalance",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "amountInUnits",
-                    "type": "uint256"
-                }
-            ],
-            "name": "donate",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "metisToken",
-            "outputs": [
-                {
-                    "internalType": "contract IERC20",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "targetAddress",
-            "outputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
+          "internalType": "uint256",
+          "name": "amountInUnits",
+          "type": "uint256"
         }
-    ]];
+      ],
+      "name": "donate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_mantleToken",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "donor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "DonationReceived",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "contractBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "mantleToken",
+      "outputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "targetAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]
+];
 const erc20ABI = [
   // ERC20 standard ABI
   {
@@ -122,16 +123,16 @@ const Fund = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Check METIS balance
+  // Check Mantle balance
   const checkBalance = async () => {
     try {
-      const provider = new ethers.providers.JsonRpcProvider('https://andromeda.metis.io/?owner=1088'); // Metis mainnet RPC
-      const erc20 = new ethers.Contract(metisTokenAddress, erc20ABI, provider);
+      const provider = new ethers.providers.JsonRpcProvider('https://rpc.sepolia.mantle.xyz'); // Mantle mainnet RPC
+      const erc20 = new ethers.Contract(mantleTokenAddress, erc20ABI, provider);
       const balance = await erc20.balanceOf(address);
       const formattedBalance = ethers.utils.formatUnits(balance, 18);
 
       if (Number(formattedBalance) < Number(amount)) {
-        setError(`Insufficient balance. You have ${formattedBalance} METIS.`);
+        setError(`Insufficient balance. You have ${formattedBalance} MANTLE.`);
         return false;
       }
       return true;
@@ -142,16 +143,16 @@ const Fund = () => {
     }
   };
 
-  // Approve METIS token transfer
+  // Approve Mantle token transfer
   const approveTokens = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const erc20 = new ethers.Contract(metisTokenAddress, erc20ABI, signer);
-      const metisAmount = ethers.utils.parseUnits(amount, 18);
+      const erc20 = new ethers.Contract(mantleTokenAddress, erc20ABI, signer);
+      const mantleAmount = ethers.utils.parseUnits(amount, 18);
 
       setTransactionStatus('Approving tokens...');
-      const tx = await erc20.approve(contractAddress, metisAmount);
+      const tx = await erc20.approve(contractAddress, mantleAmount);
       await tx.wait();
       setTransactionStatus('Tokens approved successfully!');
       return true;
@@ -162,8 +163,8 @@ const Fund = () => {
     }
   };
 
-  // Donate METIS tokens
-  const donateMetis = async () => {
+  // Donate Mantle tokens
+  const donateMantle = async () => {
     if (!isConnected) {
       setError("Please connect your wallet to proceed.");
       return;
@@ -183,10 +184,10 @@ const Fund = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(contractAddress, contractABI, signer);
-      const metisAmount = ethers.utils.parseUnits(amount, 18);
+      const mantleAmount = ethers.utils.parseUnits(amount, 18);
 
       setTransactionStatus('Sending transaction...');
-      const tx = await contract.donate(metisAmount, { gasLimit: 300000 });
+      const tx = await contract.donate(mantleAmount, { gasLimit: 300000 });
       await tx.wait();
 
       setTransactionStatus('Donation successful! Thank you for your support.');
@@ -217,12 +218,12 @@ const Fund = () => {
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                placeholder="Amount in METIS"
+                placeholder="Amount in MANTLE"
               />
               <div>
               <button
                 className="mx-10 font-sans text-white text-xl font-bold bg-purple-400 rounded-lg my-2 px-4 py-2"
-                onClick={donateMetis}
+                onClick={donateMantle}
                 disabled={loading}
               >
                 {loading ? 'Processing...' : 'Pay 💸'}
